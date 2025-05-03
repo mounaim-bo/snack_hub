@@ -1,0 +1,73 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFF"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/imageRepas"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/food1" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:textColor="#000"
+            android:fontFamily="@font/tagesschrift_regular"
+            android:paddingStart="8dp">
+
+            <TextView
+                android:id="@+id/nomRepas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:fontFamily="@font/tagesschrift_regular"
+                android:text="Nom du repas"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/descriptionRepas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Suppléments: sans oignons"
+                android:textColor="#000"
+                android:fontFamily="@font/tagesschrift_regular"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/quantiteRepas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:fontFamily="@font/tagesschrift_regular"
+                android:text="Quantité : 2"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/prixRepas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prix : 130 Dh"
+                android:textColor="#000"
+                android:fontFamily="@font/tagesschrift_regular"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
