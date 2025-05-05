@@ -58,7 +58,7 @@
                 android:fontFamily="@font/tagesschrift_regular"
                 android:gravity="center"
                 android:text="Connexion"
-                android:textColor="#FF5722"
+                android:textColor="#EADFB4"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -69,8 +69,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:boxStrokeColor="#FF5722"
-                app:hintTextColor="#FF5722">
+                app:boxStrokeColor="#EADFB4"
+                app:hintTextColor="#EADFB4">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/username"
@@ -87,8 +87,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                app:boxStrokeColor="#FF5722"
-                app:hintTextColor="#FF5722"
+                app:boxStrokeColor="#EADFB4"
+                app:hintTextColor="#EADFB4"
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -120,7 +120,7 @@
                 android:layout_height="56dp"
                 android:text="SE CONNECTER"
                 android:textStyle="bold"
-                app:backgroundTint="#FF5722"
+                app:backgroundTint="#E9DEB3"
                 app:cornerRadius="8dp" />
 
             <TextView

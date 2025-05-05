@@ -58,7 +58,7 @@
                 android:fontFamily="@font/tagesschrift_regular"
                 android:gravity="center"
                 android:text="Créez votre compte"
-                android:textColor="#FF5722"
+                android:textColor="#EADFB4"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -171,7 +171,7 @@
                 android:layout_height="56dp"
                 android:text="Créez un compte"
                 android:textStyle="bold"
-                app:backgroundTint="#FF5722"
+                app:backgroundTint="#EADFB4"
                 app:cornerRadius="8dp" />
 
         </LinearLayout>

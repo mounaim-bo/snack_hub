@@ -109,8 +109,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Valider la commande"
-            android:backgroundTint="#FF7043"
-            android:textColor="#FFFFFF"
+            android:backgroundTint="#EADFB4"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:fontFamily="@font/tagesschrift_regular"
             android:layout_marginTop="16dp"/>
     </LinearLayout>
 
