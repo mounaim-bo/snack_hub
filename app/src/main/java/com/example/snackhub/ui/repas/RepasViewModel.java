@@ -1,14 +1,14 @@
-package com.example.snackhub.ui.gallery;
+package com.example.snackhub.ui.repas;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class RepasViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public RepasViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is gallery fragment");
     }

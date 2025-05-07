@@ -8,7 +8,51 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_accueil">Accueil</string>
+    <string name="menu_repas">Repas</string>
+    <string name="menu_params">Paramètres</string>
+    <string name="menu_logout">Déconnexion</string>
+    <string name="partager">Partager</string>
+    <string name="contact_as">Contactez-nous</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Titres -->
+    <string name="contact_us_title">Contactez-nous</string>
+    <string name="form_title">Formulaire de contact</string>
+    <string name="contact_info_title">Nos coordonnées</string>
+
+    <!-- Texte d'introduction -->
+    <string name="contact_intro_text">Vous avez une question ou besoin d\'informations ? Complétez le formulaire ci-dessous et notre équipe vous répondra dans les plus brefs délais.</string>
+
+    <!-- Champs du formulaire -->
+    <string name="name_hint">Nom et prénom</string>
+    <string name="email_hint">Email</string>
+    <string name="phone_hint">Téléphone</string>
+    <string name="subject_hint">Sujet</string>
+    <string name="message_hint">Votre message</string>
+    <string name="send_button">Envoyer</string>
+
+    <!-- Validation -->
+    <string name="error_name_required">Veuillez entrer votre nom et prénom</string>
+    <string name="error_email_required">Veuillez entrer une adresse email valide</string>
+    <string name="error_message_required">Veuillez entrer votre message</string>
+    <string name="form_sent_success">Message envoyé avec succès</string>
+
+    <!-- Coordonnées -->
+    <string name="address">123 Rue Exemple, 75000 Oujda</string>
+    <string name="phone_number">+212 6 23 45 67 89</string>
+    <string name="email_address">contact@snackhub.com</string>
+    <string name="opening_hours">Heures d\'ouverture : Du lundi au vendredi, 9h - 18h</string>
+    <string name="view_on_map">Voir sur la carte</string>
+
+    <!-- Sujets de contact -->
+    <string-array name="contact_subjects">
+        <item>Information générale</item>
+        <item>Commander un produit</item>
+        <item>Signaler un problème</item>
+        <item>Partenariat commercial</item>
+        <item>Recrutement</item>
+        <item>Autre</item>
+    </string-array>
 </resources>

@@ -3,4 +3,22 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="menu_item_bg">#EADFB4</color>
+
+    <!-- Palette de couleurs principale -->
+    <color name="primary">#EADFB4</color>
+    <color name="primary_light">#F5EFD9</color>
+    <color name="primary_dark">#C5BC96</color>
+    <color name="accent">#FF8C00</color>
+
+    <!-- Couleurs de texte -->
+    <color name="text_dark">#333333</color>
+    <color name="text_medium">#666666</color>
+    <color name="text_light">#999999</color>
+    <color name="text_hint">#AAAAAA</color>
+
+    <!-- Autres couleurs -->
+    <color name="background_light">#FAFAFA</color>
+    <color name="icon_tint">#6E6E6E</color>
+    <color name="error">#E53935</color>
+    <color name="success">#43A047</color>
 </resources>

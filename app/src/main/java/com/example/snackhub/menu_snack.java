@@ -48,14 +48,14 @@ public class menu_snack extends AppCompatActivity {
 
         // Exemple : images selon le snack
         imageList = new ArrayList<>();
-        imageList.add(new Repas("Repas 1", "Description du repas 1", 65, R.drawable.food1));
-        imageList.add(new Repas("Repas 2", "Description du repas 2", 65, R.drawable.food2));
-        imageList.add(new Repas("Repas 3", "Description du repas 3", 65, R.drawable.food3));
-        imageList.add(new Repas("Repas 4", "Description du repas 4", 65, R.drawable.food4));
-        imageList.add(new Repas("Repas 5", "Description du repas 5", 65, R.drawable.food5));
-        imageList.add(new Repas("Repas 6", "Description du repas 6", 65, R.drawable.food6));
-        imageList.add(new Repas("Repas 7", "Description du repas 7", 65, R.drawable.food7));
-        imageList.add(new Repas("Repas 8", "Description du repas 8", 65, R.drawable.food8));
+        imageList.add(new Repas("Repas 1", "Description du repas 1", 65, R.drawable.food1, "Entrées", true));
+        imageList.add(new Repas("Repas 2", "Description du repas 2", 65, R.drawable.food2, "Plats", true));
+        imageList.add(new Repas("Repas 3", "Description du repas 3", 65, R.drawable.food3, "Desserts", true));
+        imageList.add(new Repas("Repas 4", "Description du repas 4", 65, R.drawable.food4, "Boissons", true));
+        imageList.add(new Repas("Repas 5", "Description du repas 5", 65, R.drawable.food5, "Entrées", true));
+        imageList.add(new Repas("Repas 6", "Description du repas 6", 65, R.drawable.food6, "Plats", true));
+        imageList.add(new Repas("Repas 7", "Description du repas 7", 65, R.drawable.food7, "Desserts", true));
+        imageList.add(new Repas("Repas 8", "Description du repas 8", 65, R.drawable.food8, "Boissons", true));
         // Ajoute dynamiquement selon ton snack
 
         adapter = new ImageAdapter(this, imageList);

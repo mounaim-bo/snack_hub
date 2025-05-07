@@ -25,5 +25,7 @@
         android:fitsSystemWindows="true"
         android:background="@drawable/bg_side_menu"
         app:headerLayout="@layout/nav_header_backoffice"
+        app:itemTextColor="@drawable/nav_item_background"
+        app:itemIconTint="@drawable/nav_item_background"
         app:menu="@menu/activity_main_drawer" />
 </androidx.drawerlayout.widget.DrawerLayout>

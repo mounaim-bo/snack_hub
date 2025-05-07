@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/repasImageItem"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="#F5F5F5"
+            android:contentDescription="Image du repas"
+            android:src="@drawable/food1"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/repasNomItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/tagesschrift_regular"
+            android:maxLines="1"
+            android:text="Sandwich Poulet"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/repasPrixItem"
+            app:layout_constraintStart_toEndOf="@id/repasImageItem"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/repasDescriptionItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/tagesschrift_regular"
+            android:maxLines="2"
+            android:text="Poulet grillé, salade, tomate, sauce maison dans un pain frais"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@id/optionsButton"
+            app:layout_constraintStart_toEndOf="@id/repasImageItem"
+            app:layout_constraintTop_toBottomOf="@id/repasNomItem" />
+
+        <TextView
+            android:id="@+id/repasCategorieItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/category_background"
+            android:fontFamily="@font/tagesschrift_regular"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp"
+            android:text="Sandwich"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/repasImageItem"
+            app:layout_constraintTop_toBottomOf="@id/repasDescriptionItem" />
+
+        <TextView
+            android:id="@+id/repasDisponibleItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/stock_background"
+            android:fontFamily="@font/tagesschrift_regular"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp"
+            android:text="Disponible"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/repasCategorieItem"
+            app:layout_constraintTop_toBottomOf="@id/repasDescriptionItem" />
+
+        <TextView
+            android:id="@+id/repasPrixItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/tagesschrift_regular"
+            android:text="65 Dhs"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/optionsButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Options"
+            android:src="@android:drawable/ic_menu_more"
+            app:tint="#757575"
+            tools:layout_editor_absoluteX="324dp"
+            tools:layout_editor_absoluteY="80dp"
+            app:layout_constraintBottom_toBottomOf="@id/repasDisponibleItem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/repasDisponibleItem" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

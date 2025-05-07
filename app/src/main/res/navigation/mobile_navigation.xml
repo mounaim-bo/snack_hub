@@ -3,23 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_accueil">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.snackhub.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_accueil"
+        android:name="com.example.snackhub.ui.accueil.AccueilFragment"
+        android:label="@string/menu_accueil"
+        tools:layout="@layout/fragment_accueil" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.snackhub.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_repas"
+        android:name="com.example.snackhub.ui.repas.RepasFragment"
+        android:label="@string/menu_repas"
+        tools:layout="@layout/fragment_params" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.snackhub.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_params"
+        android:name="com.example.snackhub.ui.slideshow.ParamsFragment"
+        android:label="@string/menu_params"
+        tools:layout="@layout/fragment_params" />
+
+    <fragment
+        android:id="@+id/ajoutRepasFragment"
+        android:name="com.example.snackhub.ui.repas.AjoutRepasFragment"
+        android:label="Ajouter un repas"
+        tools:layout="@layout/fragment_ajout_repas">
+        <!-- Définir les arguments si nécessaire -->
+    </fragment>
+
+    <fragment
+        android:id="@+id/modifierRepasFragment"
+        android:name="com.example.snackhub.ui.repas.ModifierRepasFragment"
+        android:label="Modifier un repas"
+        tools:layout="@layout/fragment_modifier_repas">
+        <!-- Définir les arguments si nécessaire -->
+    </fragment>
+
+    <fragment
+        android:id="@+id/contactNousFragment"
+        android:name="com.example.snackhub.ContactNousFragment"
+        android:label="Contactez-nous"
+        tools:layout="@layout/contact_fragment" />
+    <action
+        android:id="@+id/action_to_contactNousFragment"
+        app:destination="@id/contactNousFragment" />
 </navigation>
