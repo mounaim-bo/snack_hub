@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_all"
-    tools:context=".login">
+    tools:context=".LoginActivity">
     <!-- Barre supérieure -->
     <View
         android:id="@+id/topBar"

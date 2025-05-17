@@ -12,6 +12,14 @@
         tools:layout="@layout/fragment_accueil" />
 
     <fragment
+        android:id="@+id/modifierInfosFragment"
+        android:name="com.example.snackhub.ui.accueil.ModifierInfosFragment"
+        android:label="Modifier les Informations"
+        tools:layout="@layout/fragment_modifier_infos">
+        <!-- Définir les arguments si nécessaire -->
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_repas"
         android:name="com.example.snackhub.ui.repas.RepasFragment"
         android:label="@string/menu_repas"

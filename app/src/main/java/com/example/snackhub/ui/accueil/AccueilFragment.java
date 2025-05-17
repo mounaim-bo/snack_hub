@@ -9,13 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
+import com.example.snackhub.R;
 import com.example.snackhub.databinding.FragmentAccueilBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -31,6 +34,7 @@ public class AccueilFragment extends Fragment {
                 new ViewModelProvider(this).get(AccueilViewModel.class);
 
         binding = FragmentAccueilBinding.inflate(inflater, container, false);
+
 
         // Utilise directement binding pour accéder aux vues
         FloatingActionButton selectImageButton = binding.selectImageButton;
@@ -57,9 +61,13 @@ public class AccueilFragment extends Fragment {
             imagePickerLauncher.launch(intent);
         });
 
-        // Si tu utilises le textView dans le ViewModel (non utilisé ici)
-        //final TextView textView = binding.textHome;
-        //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        Button btn_modifier_infos = binding.editButton;
+        btn_modifier_infos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.modifierInfosFragment);
+            }
+        });
 
         // Important : retourne binding.getRoot() qui est ta vraie vue !
         return binding.getRoot();
