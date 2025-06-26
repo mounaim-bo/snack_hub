@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
 
                             // Rediriger vers la page d'accueil ou le dashboard du snack
-                            Intent intent = new Intent(LoginActivity.this, backoffice.class);
+                            Intent intent = new Intent(LoginActivity.this, BackofficeActivity.class);
                             startActivity(intent);
                             finish();
                         } else {

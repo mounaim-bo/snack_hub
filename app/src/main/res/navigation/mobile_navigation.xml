@@ -25,6 +25,13 @@
         android:label="@string/menu_repas"
         tools:layout="@layout/fragment_params" />
 
+    <!-- NOUVEAU FRAGMENT COMMANDES -->
+    <fragment
+        android:id="@+id/nav_commandes"
+        android:name="com.example.snackhub.CommandesFragment"
+        android:label="@string/menu_commandes"
+        tools:layout="@layout/fragment_commandes" />
+
     <fragment
         android:id="@+id/nav_params"
         android:name="com.example.snackhub.ui.slideshow.ParamsFragment"
@@ -52,6 +59,7 @@
         android:name="com.example.snackhub.ContactNousFragment"
         android:label="Contactez-nous"
         tools:layout="@layout/contact_fragment" />
+
     <action
         android:id="@+id/action_to_contactNousFragment"
         app:destination="@id/contactNousFragment" />

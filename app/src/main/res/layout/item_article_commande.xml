@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="#F8F9FA"
+    android:layout_marginBottom="4dp">
+
+    <!-- Ligne principale avec nom, quantité et prix -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tvNomArticle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Pizza Margherita"
+            android:textSize="14sp"
+            android:textColor="#333333"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvQuantiteArticle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="x2"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/tvPrixArticle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="90 DH"
+            android:textSize="14sp"
+            android:textColor="@color/design_default_color_primary"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- Description sur une nouvelle ligne -->
+    <TextView
+        android:id="@+id/tvDescriptionArticle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sans olives, avec fromage supplémentaire"
+        android:textSize="12sp"
+        android:textColor="#666666"
+        android:layout_marginTop="4dp"
+        android:visibility="gone" />
+
+</LinearLayout>

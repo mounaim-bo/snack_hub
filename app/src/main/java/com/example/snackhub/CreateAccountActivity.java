@@ -14,7 +14,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.snackhub.ui.accueil.AccueilFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
@@ -28,8 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CreateAccountActivity extends AppCompatActivity {
-    private TextInputEditText editTextUsername, editTextPassword, editTextPasswordConfirm,
-            editTextSnackName, editTextSnackDescription;
+    private TextInputEditText editTextUsername, editTextPassword, editTextPasswordConfirm;
     private MaterialButton buttonCreateAccount;
     private TextView textViewLogin;
     private FirebaseAuth mAuth;
@@ -47,8 +45,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.username);
         editTextPassword = findViewById(R.id.password);
         editTextPasswordConfirm = findViewById(R.id.password_confirm);
-        editTextSnackName = findViewById(R.id.nom_snack_input);
-        editTextSnackDescription = findViewById(R.id.snackDescription_input);
         buttonCreateAccount = findViewById(R.id.loginButton);
         textViewLogin = findViewById(R.id.seconnecter);
 
@@ -74,9 +70,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
 
         TextView seConnecter = findViewById(R.id.seconnecter);
-
         seConnecter.setOnClickListener(v -> {
-            // Naviguer vers l'activité de création de compte
             startActivity(new Intent(CreateAccountActivity.this, LoginActivity.class));
         });
     }
@@ -86,8 +80,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         String email = editTextUsername.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String confirmPassword = editTextPasswordConfirm.getText().toString().trim();
-        String snackName = editTextSnackName.getText().toString().trim();
-        String snackDescription = editTextSnackDescription.getText().toString().trim();
 
         // Validation des champs
         if (TextUtils.isEmpty(email)) {
@@ -110,11 +102,6 @@ public class CreateAccountActivity extends AppCompatActivity {
             return;
         }
 
-        if (TextUtils.isEmpty(snackName)) {
-            editTextSnackName.setError("Veuillez entrer le nom du snack");
-            return;
-        }
-
         // Créer un compte avec email et mot de passe
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -124,45 +111,49 @@ public class CreateAccountActivity extends AppCompatActivity {
                             // Inscription réussie
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            // Enregistrer les informations du snack dans Firestore
-                            saveSnackInfo(user.getUid(), snackName, snackDescription, email);
+                            // Créer le profil utilisateur de base
+                            createUserProfile(user.getUid(), email);
 
                         } else {
                             // Si l'inscription échoue, afficher un message à l'utilisateur
-                            editTextSnackName.setError("Échec de la création du compte: " + task.getException().getMessage());
-                            Toast.makeText(CreateAccountActivity.this, "Échec de la création du compte: " + task.getException().getMessage(),
+                            Toast.makeText(CreateAccountActivity.this,
+                                    "Échec de la création du compte: " + task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
-    private void saveSnackInfo(String userId, String snackName, String snackDescription, String email) {
-        // Créer un objet Map pour stocker les données du snack
-        Map<String, Object> snackData = new HashMap<>();
-        snackData.put("snackName", snackName);
-        snackData.put("description", snackDescription);
-        snackData.put("email", email);
-        snackData.put("userId", userId);
-        snackData.put("createdAt", System.currentTimeMillis());
+    private void createUserProfile(String userId, String email) {
+        // Créer le document utilisateur de base dans la collection "users"
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("id", userId);
+        userData.put("firstName", ""); // Sera rempli dans ModifierInfos
+        userData.put("lastName", ""); // Sera rempli dans ModifierInfos
+        userData.put("email", email);
+        userData.put("phone", ""); // Sera rempli dans ModifierInfos
+        userData.put("address", ""); // Sera rempli dans ModifierInfos
+        userData.put("birthdate", ""); // Sera rempli dans ModifierInfos
+        userData.put("profileImageUrl", ""); // Sera rempli dans ModifierInfos
+        userData.put("snackId", ""); // Sera créé plus tard si l'utilisateur le souhaite
 
-        // Ajouter à la collection "snacks" dans Firestore
-        db.collection("snacks").document(userId)
-                .set(snackData)
+        db.collection("users").document(userId)
+                .set(userData)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(CreateAccountActivity.this, "Compte créé avec succès!",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CreateAccountActivity.this,
+                                    "Compte créé avec succès!", Toast.LENGTH_SHORT).show();
 
-                            // Rediriger vers la page d'accueil ou le dashboard du snack
-                            Intent intent = new Intent(CreateAccountActivity.this, AccueilFragment.class);
+                            // Rediriger vers le BackofficeActivity
+                            Intent intent = new Intent(CreateAccountActivity.this, BackofficeActivity.class);
                             startActivity(intent);
                             finish();
+
                         } else {
-                            Toast.makeText(CreateAccountActivity.this, "Erreur lors de l'enregistrement des données du snack",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CreateAccountActivity.this,
+                                    "Erreur lors de la création du profil", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

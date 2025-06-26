@@ -11,6 +11,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.snackhub.utils.UserManager;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -25,14 +27,14 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        TextView commander = findViewById(R.id.commander);
+        TextView commander = findViewById(R.id.btnCommander);
         //TextView commander_ = findViewById(R.id.secondcommande);
         TextView seconnecter = findViewById(R.id.seconnecter);
 
         commander.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, snacks.class);
+                Intent intent = new Intent(MainActivity.this, SnacksActivity.class);
                 startActivity(intent);
             }
         });
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         /*commander_.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, snacks.class);
+                Intent intent = new Intent(MainActivity.this, SnacksActivity.class);
                 startActivity(intent);
             }
         });*/
@@ -52,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Initialiser UserManager
+        UserManager.getInstance().init(this);
+
+        // IMPORTANT: Définir le snackId du snack connecté
+        // Remplacez par votre vraie logique de récupération du snackId
+        UserManager.getInstance().setSnackId("mSwHNEUQW1G0dEqSSuOS"); // L'ID visible dans Firebase
 
     }
 }

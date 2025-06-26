@@ -21,4 +21,21 @@
     <color name="icon_tint">#6E6E6E</color>
     <color name="error">#E53935</color>
     <color name="success">#43A047</color>
+
+    <!-- Nouvelles couleurs pour les repas -->
+    <color name="text_primary">#000000</color>
+    <color name="text_secondary">#666666</color>
+    <color name="text_disabled">#999999</color>
+    <color name="success_color">#4CAF50</color>
+    <color name="error_color">#F44336</color>
+    <color name="warning_color">#FF9800</color>
+
+    <!-- Couleurs de fond -->
+    <color name="card_background">#FFFFFF</color>
+    <color name="chip_background">#EADFB4</color>
+
+    <color name="orange_light">#FF9800</color>
+    <color name="blue_light">#2196F3</color>
+    <color name="green_light">#4CAF50</color>
+    <color name="gray_dark">#616161</color>
 </resources>

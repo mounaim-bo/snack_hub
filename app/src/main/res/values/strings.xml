@@ -46,6 +46,8 @@
     <string name="opening_hours">Heures d\'ouverture : Du lundi au vendredi, 9h - 18h</string>
     <string name="view_on_map">Voir sur la carte</string>
 
+    <string name="menu_commandes">Commandes</string>
+
     <!-- Sujets de contact -->
     <string-array name="contact_subjects">
         <item>Information générale</item>

@@ -8,40 +8,50 @@
     android:background="@drawable/bg_all"
     android:padding="16dp">
 
-    <View
-        android:id="@+id/topBar"
+    <!-- Toolbar avec bouton retour -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="#FF7043"
-        android:layout_marginBottom="1dp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <!-- Titre de l'application -->
-    <TextView
-        android:id="@+id/appTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SnackHub"
-        android:textSize="20sp"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:fontFamily="@font/coralpixels_regular"
-        app:layout_constraintTop_toTopOf="@id/topBar"
-        app:layout_constraintBottom_toBottomOf="@id/topBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <!-- Bouton retour -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Retour"
+            app:tint="#FFFFFF"
+            android:layout_marginStart="4dp" />
+
+        <!-- Titre centré -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Mon Panier"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:fontFamily="@font/coralpixels_regular" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <!-- Liste des commandes -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewPanier"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomSection"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topBar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <!-- Section bas : prix total + mode commande + bouton -->
+    <!-- Section bas : prix total + mode commande + boutons -->
     <LinearLayout
         android:id="@+id/bottomSection"
         android:layout_width="0dp"
@@ -104,16 +114,41 @@
                 android:text="Prendre à table" />
         </RadioGroup>
 
-        <Button
-            android:id="@+id/validerCommandeButton"
+        <!-- Section des boutons -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Valider la commande"
-            android:backgroundTint="#EADFB4"
-            android:textColor="#000000"
-            android:textSize="20dp"
-            android:fontFamily="@font/tagesschrift_regular"
-            android:layout_marginTop="16dp"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <!-- Bouton Continuer les achats -->
+            <Button
+                android:id="@+id/continuerAchatsButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Autre commande"
+                android:backgroundTint="#9E9E9E"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:fontFamily="@font/tagesschrift_regular" />
+
+            <!-- Bouton Valider commande -->
+            <Button
+                android:id="@+id/validerCommandeButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="Valider"
+                android:backgroundTint="#EADFB4"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:fontFamily="@font/tagesschrift_regular" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

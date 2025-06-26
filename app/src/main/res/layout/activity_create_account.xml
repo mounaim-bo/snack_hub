@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_all"
-    tools:context=".LoginActivity">
+    tools:context=".CreateAccountActivity">
+
     <!-- Barre supérieure -->
     <View
         android:id="@+id/topBar"
@@ -62,13 +63,13 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <!-- Champ nom d'utilisateur -->
+            <!-- Champ email -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/usernameLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 app:boxStrokeColor="#FF5722"
                 app:hintTextColor="#FF5722">
 
@@ -76,8 +77,8 @@
                     android:id="@+id/username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nom d'utilisateur"
-                    android:inputType="text" />
+                    android:hint="Adresse email"
+                    android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Champ mot de passe -->
@@ -85,8 +86,8 @@
                 android:id="@+id/passwordLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 app:boxStrokeColor="#FF5722"
                 app:hintTextColor="#FF5722"
                 app:passwordToggleEnabled="true">
@@ -99,12 +100,13 @@
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Confirmation mot de passe -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/passwordLayoutconfirm"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
                 app:boxStrokeColor="#FF5722"
                 app:hintTextColor="#FF5722"
                 app:passwordToggleEnabled="true">
@@ -113,63 +115,30 @@
                     android:id="@+id/password_confirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Conformer le mot de passe"
+                    android:hint="Confirmer le mot de passe"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nom_snack"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="8dp"
-                app:boxStrokeColor="#FF5722"
-                app:hintTextColor="#FF5722">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/nom_snack_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Entrer le nom du snack"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/snackDescription"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="2dp"
-                app:boxStrokeColor="#FF5722"
-                app:hintTextColor="#FF5722">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/snackDescription_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Entrer une description"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Lien mot de passe oublié -->
+            <!-- Lien vers connexion -->
             <TextView
                 android:id="@+id/seconnecter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="16dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="4dp"
-                android:text="Se connecter"
+                android:text="Déjà un compte ? Se connecter"
                 android:textColor="#2196F3"
                 android:textSize="14sp" />
 
-            <!-- Bouton de connexion -->
+            <!-- Bouton de création -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginButton"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="Créez un compte"
+                android:text="Créer mon compte"
                 android:textStyle="bold"
                 app:backgroundTint="#EADFB4"
                 app:cornerRadius="8dp" />

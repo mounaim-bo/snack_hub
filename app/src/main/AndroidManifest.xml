@@ -29,28 +29,33 @@
             android:name=".AjoutRepasActivity"
             android:exported="false" />
         <activity
-            android:name=".backoffice"
+            android:name=".BackofficeActivity"
             android:exported="true"
             android:label="@string/title_activity_backoffice"
             android:theme="@style/Theme.SnackHub.NoActionBar" />
         <activity
-            android:name=".panier"
+            android:name=".PanierActivity"
             android:exported="false" />
         <activity
-            android:name=".single_repas"
+            android:name=".SingleRepasActivity"
             android:exported="false" />
         <activity
-            android:name=".menu_snack"
+            android:name=".MenuSnackActivity"
             android:exported="false" />
         <activity
             android:name=".CreateAccountActivity"
             android:exported="false" />
         <activity
-            android:name=".snacks"
+            android:name=".SnacksActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
+        <activity
+            android:name=".CommandeDetailsActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.SnackHub" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

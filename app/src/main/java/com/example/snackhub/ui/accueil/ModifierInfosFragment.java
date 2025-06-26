@@ -2,12 +2,9 @@ package com.example.snackhub.ui.accueil;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,38 +21,36 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.snackhub.R;
 import com.example.snackhub.databinding.FragmentModifierInfosBinding;
-import com.example.snackhub.model.Snack;
-import com.example.snackhub.model.User;
+import com.example.snackhub.models.Snack;
+import com.example.snackhub.models.User;
 import com.example.snackhub.utils.DialogUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 public class ModifierInfosFragment extends Fragment {
 
     private FragmentModifierInfosBinding binding;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
     private String userId;
     private User currentUser;
     private Snack userSnack;
     private Uri profileImageUri;
     private Uri snackMainImageUri;
-    private String profileImageLocalPath;
-    private String snackImageLocalPath;
     private static final String TAG = "ModifierInfosFragment";
 
     public ModifierInfosFragment() {}
@@ -90,6 +85,9 @@ public class ModifierInfosFragment extends Fragment {
         // Initialisation des variables Firebase
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+
         FirebaseUser firebaseUser = auth.getCurrentUser();
 
         if (firebaseUser != null) {
@@ -177,7 +175,7 @@ public class ModifierInfosFragment extends Fragment {
     }
 
     private void loadSnackData(String snackId) {
-        db.collection("snacks").document(snackId).get()
+        db.collection("SnacksActivity").document(snackId).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         userSnack = documentSnapshot.toObject(Snack.class);
@@ -204,30 +202,13 @@ public class ModifierInfosFragment extends Fragment {
         binding.editSnackEmail.setText(userSnack.getEmail());
         binding.editSnackOpeningHours.setText(userSnack.getOpeningHours());
 
-        // Charger l'image principale du snack (si chemin local disponible)
+        // Charger l'image principale du snack depuis Firebase Storage
         if (userSnack.getMainImageUrl() != null && !userSnack.getMainImageUrl().isEmpty()) {
-            // Vérifier si c'est un URI local ou une URL distante
-            if (userSnack.getMainImageUrl().startsWith("http")) {
-                // C'est une URL distante
-                Glide.with(requireContext())
-                        .load(userSnack.getMainImageUrl())
-                        .centerCrop()
-                        .placeholder(R.drawable.images3)
-                        .into(binding.snackMainImageView);
-            } else {
-                // C'est un chemin local
-                File imageFile = new File(userSnack.getMainImageUrl());
-                if (imageFile.exists()) {
-                    Glide.with(requireContext())
-                            .load(imageFile)
-                            .centerCrop()
-                            .placeholder(R.drawable.images3)
-                            .into(binding.snackMainImageView);
-
-                    // Stocker le chemin existant
-                    snackImageLocalPath = userSnack.getMainImageUrl();
-                }
-            }
+            Glide.with(requireContext())
+                    .load(userSnack.getMainImageUrl())
+                    .centerCrop()
+                    .placeholder(R.drawable.images3)
+                    .into(binding.snackMainImageView);
         }
     }
 
@@ -241,29 +222,13 @@ public class ModifierInfosFragment extends Fragment {
         binding.editUserAddress.setText(currentUser.getAddress());
         binding.editUserBirthdate.setText(currentUser.getBirthdate());
 
-        // Charger l'image de profil si disponible
+        // Charger l'image de profil depuis Firebase Storage
         if (currentUser.getProfileImageUrl() != null && !currentUser.getProfileImageUrl().isEmpty()) {
-            // Vérifier si c'est un URI local ou une URL distante
-            if (currentUser.getProfileImageUrl().startsWith("http")) {
-                Glide.with(requireContext())
-                        .load(currentUser.getProfileImageUrl())
-                        .centerCrop()
-                        .placeholder(R.drawable.images3)
-                        .into(binding.profileImageView);
-            } else {
-                // C'est un chemin local
-                File imageFile = new File(currentUser.getProfileImageUrl());
-                if (imageFile.exists()) {
-                    Glide.with(requireContext())
-                            .load(imageFile)
-                            .centerCrop()
-                            .placeholder(R.drawable.images3)
-                            .into(binding.profileImageView);
-
-                    // Stocker le chemin existant
-                    profileImageLocalPath = currentUser.getProfileImageUrl();
-                }
-            }
+            Glide.with(requireContext())
+                    .load(currentUser.getProfileImageUrl())
+                    .centerCrop()
+                    .placeholder(R.drawable.images3)
+                    .into(binding.profileImageView);
         }
     }
 
@@ -279,19 +244,7 @@ public class ModifierInfosFragment extends Fragment {
 
         DialogUtils.showLoadingDialog(requireContext(), "Enregistrement des modifications...");
 
-        // Si une nouvelle image de profil a été sélectionnée, la sauvegarder localement
-        if (profileImageUri != null) {
-            try {
-                profileImageLocalPath = saveImageLocally(profileImageUri, "profile_" + userId);
-            } catch (IOException e) {
-                Log.e(TAG, "Erreur lors de l'enregistrement de l'image de profil", e);
-                showError("Erreur lors de l'enregistrement de l'image de profil: " + e.getMessage());
-                DialogUtils.hideLoadingDialog();
-                return;
-            }
-        }
-
-        // Sauvegarder les données utilisateur
+        // Préparer les données utilisateur de base
         String firstname = binding.editUserFirstName.getText().toString().trim();
         String lastname = binding.editUserLastName.getText().toString().trim();
         String email = binding.editUserEmail.getText().toString().trim();
@@ -309,12 +262,48 @@ public class ModifierInfosFragment extends Fragment {
         if (currentSnackId != null && !currentSnackId.isEmpty()) {
             finalSnackId = currentSnackId;
         } else if (shouldCreateSnack) {
-            finalSnackId = db.collection("snacks").document().getId();
+            finalSnackId = db.collection("SnacksActivity").document().getId();
         } else {
             finalSnackId = null;
         }
 
-        // Créer un objet User avec toutes les données
+        // Si une nouvelle image de profil a été sélectionnée, la télécharger sur Firebase Storage
+        if (profileImageUri != null) {
+            // Générer un nom unique pour l'image
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+            String fileName = "profile_" + timeStamp + "_" + UUID.randomUUID().toString() + ".jpg";
+            StorageReference profileImageRef = storageRef.child("profile_images/" + userId + "/" + fileName);
+
+            // Télécharger l'image
+            profileImageRef.putFile(profileImageUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        // Obtenir l'URL de téléchargement
+                        profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            String profileImageUrl = uri.toString();
+                            Log.d(TAG, "Image de profil téléchargée avec succès: " + profileImageUrl);
+
+                            // Mettre à jour les données utilisateur avec la nouvelle URL
+                            updateUserDataInFirestore(firstname, lastname, email, phone, address, birthdate, profileImageUrl, finalSnackId, shouldCreateSnack);
+                        }).addOnFailureListener(e -> {
+                            DialogUtils.hideLoadingDialog();
+                            showError("Erreur lors de la récupération de l'URL de l'image: " + e.getMessage());
+                        });
+                    })
+                    .addOnFailureListener(e -> {
+                        DialogUtils.hideLoadingDialog();
+                        showError("Erreur lors du téléchargement de l'image: " + e.getMessage());
+                    });
+        } else {
+            // Pas de nouvelle image, conserver l'URL existante si elle existe
+            String profileImageUrl = currentUser != null ? currentUser.getProfileImageUrl() : null;
+            updateUserDataInFirestore(firstname, lastname, email, phone, address, birthdate, profileImageUrl, finalSnackId, shouldCreateSnack);
+        }
+    }
+
+    private void updateUserDataInFirestore(String firstname, String lastname, String email, String phone,
+                                           String address, String birthdate, String profileImageUrl,
+                                           String finalSnackId, boolean shouldCreateSnack) {
+        // Créer un objet avec les données utilisateur
         Map<String, Object> userData = new HashMap<>();
         userData.put("id", userId);
         userData.put("firstName", firstname);
@@ -323,12 +312,14 @@ public class ModifierInfosFragment extends Fragment {
         userData.put("phone", phone);
         userData.put("address", address);
         userData.put("birthdate", birthdate);
-        userData.put("profileImageUrl", profileImageLocalPath);
+        userData.put("profileImageUrl", profileImageUrl);
         userData.put("snackId", finalSnackId);
 
+        // Enregistrer les données dans Firestore
         db.collection("users").document(userId)
                 .set(userData, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> {
+                    // Mettre à jour l'objet utilisateur local
                     if (currentUser == null) {
                         currentUser = new User();
                         currentUser.setId(userId);
@@ -339,7 +330,7 @@ public class ModifierInfosFragment extends Fragment {
                     currentUser.setPhone(phone);
                     currentUser.setAddress(address);
                     currentUser.setBirthdate(birthdate);
-                    currentUser.setProfileImageUrl(profileImageLocalPath);
+                    currentUser.setProfileImageUrl(profileImageUrl);
                     currentUser.setSnackId(finalSnackId);
 
                     if (shouldCreateSnack && finalSnackId != null) {
@@ -362,18 +353,6 @@ public class ModifierInfosFragment extends Fragment {
             return;
         }
 
-        // Si une nouvelle image du snack a été sélectionnée, la sauvegarder localement
-        if (snackMainImageUri != null) {
-            try {
-                snackImageLocalPath = saveImageLocally(snackMainImageUri, "snack_" + snackId);
-            } catch (IOException e) {
-                Log.e(TAG, "Erreur lors de l'enregistrement de l'image du snack", e);
-                showError("Erreur lors de l'enregistrement de l'image du snack: " + e.getMessage());
-                DialogUtils.hideLoadingDialog();
-                return;
-            }
-        }
-
         // Récupérer les données du snack depuis les champs
         String snackName = binding.editSnackName.getText().toString().trim();
         String snackDescription = binding.editSnackDescription.getText().toString().trim();
@@ -382,6 +361,44 @@ public class ModifierInfosFragment extends Fragment {
         String snackEmail = binding.editSnackEmail.getText().toString().trim();
         String snackHour = binding.editSnackOpeningHours.getText().toString().trim();
 
+        // Si une nouvelle image du snack a été sélectionnée, la télécharger sur Firebase Storage
+        if (snackMainImageUri != null) {
+            // Générer un nom unique pour l'image
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+            String fileName = "snack_" + timeStamp + "_" + UUID.randomUUID().toString() + ".jpg";
+            StorageReference snackImageRef = storageRef.child("snack_images/" + snackId + "/" + fileName);
+
+            // Télécharger l'image
+            snackImageRef.putFile(snackMainImageUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        // Obtenir l'URL de téléchargement
+                        snackImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            String snackImageUrl = uri.toString();
+                            Log.d(TAG, "Image de snack téléchargée avec succès: " + snackImageUrl);
+
+                            // Mettre à jour les données du snack avec la nouvelle URL
+                            updateSnackDataInFirestore(snackId, snackName, snackDescription, snackPhone,
+                                    snackAddress, snackEmail, snackHour, snackImageUrl);
+                        }).addOnFailureListener(e -> {
+                            DialogUtils.hideLoadingDialog();
+                            showError("Erreur lors de la récupération de l'URL de l'image: " + e.getMessage());
+                        });
+                    })
+                    .addOnFailureListener(e -> {
+                        DialogUtils.hideLoadingDialog();
+                        showError("Erreur lors du téléchargement de l'image: " + e.getMessage());
+                    });
+        } else {
+            // Pas de nouvelle image, conserver l'URL existante si elle existe
+            String snackImageUrl = userSnack != null ? userSnack.getMainImageUrl() : null;
+            updateSnackDataInFirestore(snackId, snackName, snackDescription, snackPhone,
+                    snackAddress, snackEmail, snackHour, snackImageUrl);
+        }
+    }
+
+    private void updateSnackDataInFirestore(String snackId, String snackName, String snackDescription,
+                                            String snackPhone, String snackAddress, String snackEmail,
+                                            String snackHour, String snackImageUrl) {
         // Préparer les données du snack
         Map<String, Object> snackData = new HashMap<>();
         snackData.put("id", snackId);
@@ -391,13 +408,27 @@ public class ModifierInfosFragment extends Fragment {
         snackData.put("address", snackAddress);
         snackData.put("email", snackEmail);
         snackData.put("openingHours", snackHour);
-        snackData.put("mainImageUrl", snackImageLocalPath); // Utiliser le chemin local
+        snackData.put("mainImageUrl", snackImageUrl);
         snackData.put("ownerId", userId);
 
-        db.collection("snacks").document(snackId)
+        // Enregistrer les données dans Firestore
+        db.collection("SnacksActivity").document(snackId)
                 .set(snackData, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> {
-                    updateLocalSnackObject(snackId, snackData);
+                    // Mettre à jour l'objet snack local
+                    if (userSnack == null) {
+                        userSnack = new Snack();
+                    }
+                    userSnack.setId(snackId);
+                    userSnack.setName(snackName);
+                    userSnack.setDescription(snackDescription);
+                    userSnack.setPhone(snackPhone);
+                    userSnack.setAddress(snackAddress);
+                    userSnack.setEmail(snackEmail);
+                    userSnack.setOpeningHours(snackHour);
+                    userSnack.setMainImageUrl(snackImageUrl);
+                    userSnack.setUserId(userId);
+
                     DialogUtils.hideLoadingDialog();
                     Toast.makeText(requireContext(), "Informations du snack mises à jour", Toast.LENGTH_SHORT).show();
                 })
@@ -406,58 +437,5 @@ public class ModifierInfosFragment extends Fragment {
                     DialogUtils.hideLoadingDialog();
                     showError("Erreur lors de la mise à jour du snack: " + e.getMessage());
                 });
-    }
-
-    private void updateLocalSnackObject(String snackId, Map<String, Object> snackData) {
-        if (userSnack == null) {
-            userSnack = new Snack();
-        }
-
-        userSnack.setId(snackId);
-        userSnack.setName((String) snackData.get("name"));
-        userSnack.setDescription((String) snackData.get("description"));
-        userSnack.setPhone((String) snackData.get("phone"));
-        userSnack.setAddress((String) snackData.get("address"));
-        userSnack.setEmail((String) snackData.get("email"));
-        userSnack.setOpeningHours((String) snackData.get("openingHours"));
-        userSnack.setMainImageUrl((String) snackData.get("mainImageUrl"));
-        userSnack.setUserId((String) snackData.get("ownerId"));
-    }
-
-    /**
-     * Sauvegarde une image localement sur l'appareil de l'utilisateur
-     * @param imageUri URI de l'image à sauvegarder
-     * @param name Nom à donner au fichier
-     * @return Chemin absolu du fichier sauvegardé
-     * @throws IOException En cas d'erreur d'écriture
-     */
-    private String saveImageLocally(Uri imageUri, String name) throws IOException {
-        Context context = requireContext();
-
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        String fileName = name + "_" + timeStamp + ".jpg";
-
-        File destFile = new File(context.getFilesDir(), fileName);
-
-        // Enregistrer dans le dossier Pictures (nécessite des permissions)
-        // File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        // File destFile = new File(storageDir, fileName);
-
-        try (InputStream in = context.getContentResolver().openInputStream(imageUri);
-             OutputStream out = new FileOutputStream(destFile)) {
-
-            byte[] buffer = new byte[8192];
-            int read;
-
-            while ((read = in.read(buffer)) != -1) {
-                out.write(buffer, 0, read);
-            }
-
-            out.flush();
-
-            Log.d(TAG, "Image sauvegardée avec succès à : " + destFile.getAbsolutePath());
-
-            return destFile.getAbsolutePath();
-        }
     }
 }

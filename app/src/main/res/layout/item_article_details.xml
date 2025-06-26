@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="#F8F9FA">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <!-- Numéro de l'article -->
+        <TextView
+            android:id="@+id/tvNumeroArticle"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:text="1"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:background="@drawable/circle_primary"
+            android:gravity="center"
+            android:layout_marginEnd="12dp" />
+
+        <!-- Informations de l'article -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNomArticle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nom du repas"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/tvQuantiteArticle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantité: 2"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="2dp" />
+
+            <TextView
+                android:id="@+id/tvPrixUnitaire"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prix unitaire: 50 DH"
+                android:textSize="12sp"
+                android:textColor="#888888" />
+
+            <TextView
+                android:id="@+id/tvDescriptionArticle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description de l'article"
+                android:textSize="12sp"
+                android:textColor="#666666"
+                android:textStyle="italic"
+                android:layout_marginTop="4dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <!-- Prix total de l'article -->
+        <TextView
+            android:id="@+id/tvPrixTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100 DH"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/design_default_color_primary"
+            android:layout_marginStart="12dp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
